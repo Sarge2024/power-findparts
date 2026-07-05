@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Part, Vehicle, VehicleLink, CosmosPart } from '../types';
+import { Html5Qrcode } from 'html5-qrcode';
 import { IMAGE_LINKS } from '../initialData';
 import { 
   Camera, 
@@ -50,8 +51,8 @@ export default function Scanner({
   
   // Real Camera States
   const [useRealCamera, setUseRealCamera] = useState<boolean>(false);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
   const [cameraError, setCameraError] = useState<string | null>(null);
+  const html5QrCodeRef = useRef<Html5Qrcode | null>(null);
 
   // Cosmos States
   const [gtinInput, setGtinInput] = useState<string>('');
@@ -63,33 +64,51 @@ export default function Scanner({
     }
   }, [preSelectedPart]);
 
-  // Handle actual browser camera stream
+  // Handle actual browser camera stream with html5-qrcode
   useEffect(() => {
-    let stream: MediaStream | null = null;
+    let isMounted = true;
+
     if (useRealCamera) {
-      navigator.mediaDevices.getUserMedia({ 
-        video: { facingMode: 'environment' } 
-      })
-      .then((s) => {
-        stream = s;
-        if (videoRef.current) {
-          videoRef.current.srcObject = s;
-        }
-        setCameraError(null);
-      })
-      .catch((err) => {
-        console.error("Camera access failed:", err);
-        setCameraError("Acesso à câmera negado ou indisponível. Usando simulador.");
-        setUseRealCamera(false);
-      });
+      if (!html5QrCodeRef.current) {
+        html5QrCodeRef.current = new Html5Qrcode("reader-container");
+      }
+      
+      setTimeout(() => {
+        if (!isMounted) return;
+        html5QrCodeRef.current?.start(
+          { facingMode: "environment" },
+          {
+            fps: 10,
+            qrbox: { width: 250, height: 150 }
+          },
+          (decodedText) => {
+            // Sucesso na leitura
+            setGtinInput(decodedText);
+            onShowToast("Código detectado: " + decodedText);
+            setUseRealCamera(false); // desliga a câmera após a leitura
+          },
+          (errorMessage) => {
+            // erros de leitura quadro-a-quadro (ignorar)
+          }
+        ).catch((err) => {
+          console.error("Camera access failed:", err);
+          setCameraError("Acesso à câmera negado ou indisponível. Usando simulador.");
+          setUseRealCamera(false);
+        });
+      }, 100);
+    } else {
+      if (html5QrCodeRef.current && html5QrCodeRef.current.isScanning) {
+        html5QrCodeRef.current.stop().catch(err => console.error(err));
+      }
     }
 
     return () => {
-      if (stream) {
-        stream.getTracks().forEach(track => track.stop());
+      isMounted = false;
+      if (html5QrCodeRef.current && html5QrCodeRef.current.isScanning) {
+        html5QrCodeRef.current.stop().catch(err => console.error(err));
       }
     };
-  }, [useRealCamera]);
+  }, [useRealCamera, onShowToast]);
 
   // Get active links for the currently scanned part
   const activeLinks = links.filter(l => l.partNumber === scannedPart.number);
@@ -161,13 +180,7 @@ export default function Scanner({
       {/* Scanner Viewport Section */}
       <section id="scanner-viewport" className="relative h-64 sm:h-80 bg-black rounded-md overflow-hidden flex items-center justify-center shadow-inner">
         {useRealCamera ? (
-          <video 
-            ref={videoRef} 
-            autoPlay 
-            playsInline 
-            muted 
-            className="w-full h-full object-cover"
-          />
+          <div id="reader-container" className="w-full h-full [&>video]:w-full [&>video]:h-full [&>video]:object-cover" />
         ) : (
           <div className="absolute inset-0 bg-cover bg-center transition-all duration-700 opacity-85" style={{ backgroundImage: `url(${scannedPart.number.includes('025 B') ? IMAGE_LINKS.alternatorReal : IMAGE_LINKS.scannerFeed})` }}></div>
         )}
