@@ -67,6 +67,7 @@ export default function Scanner({
   // Handle actual browser camera stream with html5-qrcode
   useEffect(() => {
     let isMounted = true;
+    let hasScanned = false;
 
     if (useRealCamera) {
       if (!html5QrCodeRef.current) {
@@ -82,10 +83,19 @@ export default function Scanner({
             qrbox: { width: 250, height: 150 }
           },
           (decodedText) => {
+            if (hasScanned || !isMounted) return;
+            hasScanned = true;
+
             // Sucesso na leitura
             setGtinInput(decodedText);
             onShowToast("Código detectado: " + decodedText);
-            setUseRealCamera(false); // desliga a câmera após a leitura
+            
+            // Pequeno delay para a lib html5-qrcode finalizar o loop interno antes do unmount/stop
+            setTimeout(() => {
+              if (isMounted) {
+                setUseRealCamera(false);
+              }
+            }, 600);
           },
           (errorMessage) => {
             // erros de leitura quadro-a-quadro (ignorar)
