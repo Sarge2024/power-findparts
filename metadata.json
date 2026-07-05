@@ -1,0 +1,6 @@
+{
+  "name": "Power Find Parts",
+  "description": "Uma aplicação mobile PWA de alta precisão para catalogar, escanear e vincular peças automotivas originais a veículos compatíveis, desenvolvida para a Sagacitas Industrial.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
