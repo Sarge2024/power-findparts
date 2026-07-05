@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Part, Vehicle, VehicleLink, ActivityLog, TechGroup } from './types';
+import { Part, Vehicle, VehicleLink, ActivityLog, TechGroup, CosmosPart } from './types';
 import { 
   INITIAL_PARTS, 
   INITIAL_VEHICLES, 
@@ -66,6 +66,11 @@ export default function App() {
     return saved ? JSON.parse(saved) : INITIAL_LOGS;
   });
 
+  const [cosmosParts, setCosmosParts] = useState<CosmosPart[]>(() => {
+    const saved = localStorage.getItem("pf_cosmos_parts");
+    return saved ? JSON.parse(saved) : [];
+  });
+
   // Technical variables
   const [currentVehicle, setCurrentVehicle] = useState<Vehicle>(INITIAL_VEHICLES[1]); // Voyage 2011 is default target
   const [preSelectedPart, setPreSelectedPart] = useState<Part | null>(null);
@@ -86,6 +91,10 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem("pf_logs", JSON.stringify(logs));
   }, [logs]);
+
+  useEffect(() => {
+    localStorage.setItem("pf_cosmos_parts", JSON.stringify(cosmosParts));
+  }, [cosmosParts]);
 
   // Toast trigger
   const triggerToast = (message: string) => {
@@ -146,11 +155,27 @@ export default function App() {
     setLogs(prev => [newLog, ...prev]);
   };
 
+  const handleAddCosmosPart = (part: Omit<CosmosPart, 'id' | 'timestamp'>) => {
+    const newCosmosPart: CosmosPart = {
+      ...part,
+      id: `cosmos-${Date.now()}`,
+      timestamp: new Date().toISOString()
+    };
+    setCosmosParts(prev => [newCosmosPart, ...prev]);
+    triggerToast("PEÇA DO COSMOS SALVA COM SUCESSO");
+  };
+
+  const handleRemoveCosmosPart = (id: string) => {
+    setCosmosParts(prev => prev.filter(p => p.id !== id));
+    triggerToast("PEÇA DO COSMOS REMOVIDA");
+  };
+
   // Resets Database cache
   const handleResetDatabase = () => {
     setParts(INITIAL_PARTS);
     setLinks(INITIAL_LINKS);
     setLogs(INITIAL_LOGS);
+    setCosmosParts([]);
     setCurrentVehicle(INITIAL_VEHICLES[1]);
   };
 
@@ -200,6 +225,9 @@ export default function App() {
             vehicles={INITIAL_VEHICLES}
             links={links}
             preSelectedPart={preSelectedPart}
+            cosmosParts={cosmosParts}
+            onAddCosmosPart={handleAddCosmosPart}
+            onRemoveCosmosPart={handleRemoveCosmosPart}
             onAddLink={handleAddLink}
             onRemoveLink={handleRemoveLink}
             onFinalize={() => {

@@ -1,0 +1,169 @@
+﻿Identificação e Rastreabilidade de Peças Veiculares no Brasil: Portais de Consulta Online e Procedimentos de Leitura por Câmara Móvel
+O mercado de reposição de autopeças no Brasil assenta num ecossistema complexo onde interagem normas de conformidade fiscal, cadeias de suprimentos globais e políticas de segurança pública contra o comércio ilegal de peças roubadas. Para um profissional do setor ou um consumidor final, a capacidade de identificar uma peça automóvel a partir de um código de barras recorrendo à câmara de um telemóvel e consultar instantaneamente uma base de dados estruturada é uma necessidade operacional crescente. Esta tarefa exige a compreensão das diferentes tipologias de códigos de barras (como os códigos lineares 1D e os bidimensionais QR Code) e o conhecimento exato dos portais de internet concebidos para mediar essa validação de dados.
+Enquadramento Tecnológico e Regulamentar dos Códigos de Barras
+No contexto automóvel brasileiro, existem dois grandes universos de codificação de peças que servem propósitos distintos: a identificação comercial e fiscal de peças novas, e a rastreabilidade estatal de componentes usados provenientes de desmontagem1.
+Identificação Comercial e Padrões GTIN/EAN
+As peças novas e os componentes de reposição (aftermarket) produzidos ou importados legalmente utilizam a norma global gerida pela GS1, baseada no número GTIN (Global Trade Item Number)1. O formato mais comum para pontos de venda no retalho é o GTIN-13 (antigo código EAN-13), que armazena uma sequência numérica única de 13 dígitos1. No Brasil, a Secretaria da Fazenda (SEFAZ) exige a validação do GTIN na emissão da Nota Fiscal Eletrónica (NF-e) e da Nota Fiscal de Consumidor Eletrónica (NFC-e), o que força os fabricantes a manterem os seus registos estritamente atualizados no Cadastro Centralizado de GTIN (CCG)5. Empresas de codificação fornecem blocos de códigos com o prefixo nacional "0789" em total conformidade com estas normas da SEFAZ, garantindo que o produto seja reconhecido internacionalmente5.
+Rastreabilidade Estatal e a Lei do Desmonte
+Para peças usadas, o cenário regulamentar é ditado pela Lei Federal nº 12.977/2014 (Lei do Desmonte)3. Esta legislação transformou o mercado de reciclagem automóvel ao exigir que todas as peças recuperadas em Centros de Desmanches de Veículos (CDVs) credenciados recebam uma etiqueta de segurança inviolável7. Estas etiquetas possuem um código bidimensional dinâmico (QR Code) que funciona como um lacre eletrónico, associando o componente físico ao número do chassi do veículo de origem, à nota fiscal de entrada e ao respetivo laudo técnico de reuso emitido por um engenheiro responsável9.
+Portais Online para Consulta de Peças Novas e Dados Fiscais
+Para verificar códigos de barras de peças novas diretamente no navegador do telemóvel, existem portais públicos e privados que disponibilizam motores de busca eficientes.
+Portal de Consulta de Dados de Produtos da GS1 Brasil
+A GS1 Brasil disponibiliza uma ferramenta oficial e gratuita que atua como a base de dados mais fiável para validar a autenticidade de um GTIN1.
+* Endereço Web: https://www.gs1br.org/consultar-dados-de-produtos
+[cite: 1]
+* Como Funciona: O utilizador acede ao sítio de internet através do navegador do telemóvel, introduz o número GTIN (8, 12, 13 ou 14 dígitos) impresso abaixo das barras e visualiza imediatamente a descrição técnica oficial, marca, categoria, fabricante e imagens do produto1. Os dados são obtidos diretamente do Cadastro Nacional de Produtos, o que previne a duplicação ou o uso de códigos falsificados1. Para integrações corporativas, a plataforma disponibiliza o serviço Verified by GS1, permitindo consultas automatizadas em lote através de chaves de API12.
+Bluesoft Cosmos
+O Bluesoft Cosmos é o maior catálogo online de produtos do Brasil, agregando dados comerciais, logísticos e de classificação fiscal13.
+   * Endereço Web: https://cosmos.bluesoft.com.br/buscar_produtos_por_codigo_de_barras
+[cite: 14]
+   * Como Funciona: Ao submeter um código EAN/GTIN, o portal exibe o nome do produto, o fabricante, a marca, o preço médio de mercado e a Nomenclatura Comum do Mercosul (NCM)14. No caso das autopeças, o portal detalha ainda as especificações do Código de Especificação da Substituição Tributária (CEST), as alíquotas de ICMS, PIS, COFINS e o respetivo Código de Situação Tributária (CST)14. A plataforma é altamente otimizada para pesquisas móveis e pode ser integrada via API aos sistemas de planeamento de recursos empresariais (ERP) de oficinas e retalhistas14.
+Plataformas Alternativas de Busca Unificada
+Existem soluções simplificadas na internet que facilitam a catalogação e pesquisa rápida de códigos de barras sem custos associados:
+      * API de Produtos - Busca Unificada: Acessível em https://api-produtos.seunegocionanuvem.com.br/, esta ferramenta deteta automaticamente se o dado inserido é um código de barras de formato nacional ou internacional (EAN-8, EAN-13, EAN-14, GTIN) ou uma descrição textual, executando uma busca exata16.
+      * EanPictures: Disponível em http://www.eanpictures.com.br, este sítio de internet é uma base colaborativa recomendada para a recuperação rápida de imagens e descrições básicas associadas a códigos de barras lineares6.
+      * GTIN RSC Sistemas: O portal http://www.gtin.rscsistemas.com.br/ funciona como uma base colaborativa para consulta e enriquecimento de dados de produtos, fornecendo integrações via HTTP REST para sistemas de automação que dependem de identificadores GTIN17.
+      * Canal da Peça: Sítio de internet especializado no comércio eletrónico de componentes automóveis, acessível em https://www.canaldapeca.com.br/categoria/autopecas/busca-por-codigo-da-peca, que permite pesquisar peças de marcas comerciais e comparar a sua disponibilidade no mercado através do código do fabricante18.
+A tabela seguinte apresenta uma comparação sistemática das principais plataformas de consulta de peças novas:
+
+
+Plataforma Online
+	URL de Acesso
+	Tipo de Dados Fornecidos
+	Público-Alvo Principal
+	GS1 Brasil
+	https://www.gs1br.org/consultar-dados-de-produtos
+[cite: 1]
+	Validação oficial de GTIN, marca, fabricante e imagens1
+	Fabricantes, distribuidores e auditores de conformidade1
+	Bluesoft Cosmos
+	https://cosmos.bluesoft.com.br/buscar_produtos_por_codigo_de_barras
+[cite: 14]
+	NCM, CEST, CST, ICMS, PIS, COFINS e preço médio14
+	Contabilistas, gestores de stock e retalhistas de autopeças14
+	API de Produtos
+	https://api-produtos.seunegocionanuvem.com.br/
+[cite: 16]
+	Descrição simplificada e detecção automática de formatos16
+	Desenvolvedores de software e operadores de caixa16
+	EanPictures
+	http://www.eanpictures.com.br
+[cite: 6]
+	Imagens e dados cadastrais básicos de produtos6
+	Consumidores finais e pequenos retalhistas6
+	Canal da Peça
+	https://www.canaldapeca.com.br/categoria/autopecas/busca-por-codigo-da-peca
+[cite: 18]
+	Código do fabricante, preços comerciais e ofertas de lojas18
+	Mecânicos, reparadores e proprietários de veículos20
+	Rastreabilidade de Peças Usadas e Portais Governamentais dos Detrans
+Quando a peça de reposição é usada ou recondicionada, a sua comercialização só é lícita se estiver registada nos portais de controlo de desmontes dos Detrans estaduais2. O cidadão pode escanear o QR Code da etiqueta com o telemóvel para verificar a procedência imediata do item2.
+Detran-SP (São Paulo)
+O estado de São Paulo, pioneiro na aplicação da Lei do Desmonte, centraliza o seu registo de peças usadas e permite consultas diretas na internet3.
+      * Endereço Web: https://servicos.sp.gov.br/fcarta/7BD0A8CC-165E-444A-833E-137B78058EE1
+[cite: 3]
+      * Como Funciona: Este serviço online permite consultar as informações de peças automóveis reutilizáveis selecionando a pesquisa por "tipo de peça" ou por "número de etiqueta da peça"3. O processo é gratuito e imediato3. Quando o QR Code físico da peça é lido pela câmara através da aplicação do Poupatempo ou do Detran-SP, o utilizador obtém acesso ao número da nota fiscal de entrada do desmonte, marca, modelo e ano do veículo dador, e até às fotografias tiradas ao veículo no momento em que deu entrada no leilão9. Isso impossibilita que peças de veículos roubados sejam comercializadas sob etiquetas clonadas, uma vez que o estado do veículo dador exibido no ecrã deve coincidir com a origem mecânica do componente10.
+Detran-RS (Rio Grande do Sul)
+O Rio Grande do Sul dispõe de uma infraestrutura digital avançada para rastreio de componentes usados, denominada "Peça Legal RS"8.
+         * Endereço Web: https://pecalegal.detran.rs.gov.br/cdv-portal/mod-consulta/informacoes.xhtml
+[cite: 8]
+         * Como Funciona: Através deste sítio de internet, o consumidor pode selecionar a categoria do veículo (carro, moto, camião, autocarro), especificar o nome do componente (por exemplo, "Para-choque Dianteiro") e indicar a marca ou modelo do veículo dador8. O sistema devolve a lista de Centros de Desmanche de Veículos (CDVs) credenciados que possuem a peça em stock físico, fornecendo o contacto de telefone, e-mail e endereço das empresas registadas8. No estabelecimento físico, a validação de autenticidade da etiqueta com QR Code é realizada através do aplicativo móvel oficial do Denatran (VIO), que certifica a legalidade do lote25.
+Detran-ES (Espírito Santo)
+O programa "Peça Legal" do Espírito Santo foi concebido para reformular o mercado de peças usadas e mitigar as taxas de roubo automóvel no estado2.
+            * Mecanismo de Controlo: O processo inicia-se com a inspeção da Polícia Civil aos veículos adquiridos pelas empresas de desmonte para garantir a ausência de adulterações de chassis2. Posteriormente, cada componente reutilizável é catalogado e selado com uma etiqueta destrutiva que contém um QR Code2. Ao efetuar a leitura do QR Code com a câmara do telemóvel, o cidadão acede ao portal do Detran-ES e confirma o histórico detalhado do veículo desmontado e a legalidade da transação comercial2.
+A tabela seguinte detalha os canais estatais para a validação de autopeças usadas no Brasil:
+
+
+Estado (Órgão)
+	Nome do Programa
+	Método de Validação Móvel
+	Informação Retornada ao Utilizador
+	São Paulo (Detran-SP)
+	Registo de Desmontes3
+	Leitura de QR Code via App Poupatempo ou introdução de etiqueta no portal3
+	Dados do veículo dador, fotos de leilão, dados da nota fiscal de entrada9
+	Rio Grande do Sul (Detran-RS)
+	Peça Legal RS8
+	Busca textual por categoria/modelo ou validação de selo via App VIO8
+	Listagem de CDVs autorizados, stock em tempo real e dados de contacto8
+	Espírito Santo (Detran-ES)
+	Peça Legal2
+	Leitura do QR Code da etiqueta destrutiva via câmara do telemóvel2
+	Certificado de vistoria da Polícia Civil, dados do veículo e baixa automática de stock2
+	Protocolo Operacional para Leitura de Códigos com a Câmara do Telemóvel via Web
+Para realizar a tarefa de ler um código de barras com a câmara do telemóvel e pesquisar na internet sem a necessidade de descarregar e instalar aplicações nativas pesadas, o utilizador deve seguir um protocolo técnico estruturado com recursos baseados no navegador (browser).
+
+
+
+
+
+
+[ Câmara do Telemóvel ] --> [ Leitor de Código de Barras Online ] --> [ Decodificação do GTIN ]
+                                                                            |
+    +-----------------------------------------------------------------------+
+    |
+    v
+[ Busca Automatizada ] --> [ Portais de Destino (GS1, Bluesoft Cosmos, Detran ou SEFAZ) ]
+
+Leitura Direta de Código de Barras no Navegador (Webcam Scanner)
+Para evitar a instalação de aplicações que consomem armazenamento no telemóvel, o utilizador pode utilizar descodificadores web que acedem diretamente à câmara do dispositivo27.
+            1. Aceder a um Descodificador Web: O utilizador abre o navegador (Google Chrome ou Safari) e acede a uma ferramenta de escaneamento online, como o leitor do portal MyQRCode (https://myqrcode.com/pt/barcode-scanner)27.
+            2. Conceder Permissões: O sítio de internet solicitará autorização para aceder à câmara do telemóvel27. O utilizador deve conceder a permissão27.
+            3. Alinhamento do Código: Deve-se posicionar o código de barras da peça (1D ou 2D) no centro do ecrã, dentro das marcações guias27. Recomenda-se manter o telemóvel estável por 2 a 3 segundos28. Caso o ambiente esteja escuro, a lanterna do dispositivo deve ser acionada diretamente no ecrã do navegador se a ferramenta web suportar, ou recorrendo às configurações rápidas do telemóvel28.
+            4. Obtenção do Resultado: Após a decodificação bem-sucedida, o número do código de barras (GTIN/EAN) será exibido no campo "Resultados"27. O utilizador pode copiar o número diretamente para a área de transferência27.
+            5. Procura na Base de Dados: O utilizador acede ao portal de eleição — como o Bluesoft Cosmos ou o portal da GS1 Brasil — cola o código copiado no campo de pesquisa e obtém os dados estruturados do fabricante e da peça automóvel1.
+Leitura Nativa e Redirecionamento Automático (Apenas para QR Codes)
+Caso a peça possua uma etiqueta de desmonte do Detran com um QR Code, o fluxo de consulta web é ainda mais direto e não requer intermediários9.
+            1. Ativação da Câmara: O utilizador abre a aplicação de câmara nativa do telemóvel (iOS ou Android)30.
+            2. Focagem do Código: Aponta a lente para o QR Code da etiqueta afixada na peça28.
+            3. Deteção de Hiperligação: O software de inteligência visual do telemóvel deteta a informação codificada e exibe um banner com um endereço eletrónico correspondente (por exemplo, apontando para o subdomínio oficial do Detran correspondente)2.
+            4. Abertura do Portal: O utilizador toca no banner exibido no ecrã30. O telemóvel abre automaticamente o navegador de internet e carrega a página com o registo de segurança e a nota fiscal da peça, confirmando se o item tem procedência legal ou se foi denunciado como irregular2.
+Integração de Hardware e Configuração Avançada para Oficinas e CDVs
+Em ambientes profissionais onde o volume de peças consultadas diariamente é elevado, o uso exclusivo da câmara do telemóvel pode tornar-se ineficiente devido ao cansaço visual e à velocidade de focagem das lentes em condições de iluminação variável31. Nesses cenários, recomenda-se a utilização de leitores de códigos de barras portáteis com tecnologia de sensor CMOS Imager 2D e conectividade sem fios (Bluetooth ou Wi-Fi) emparelhados diretamente com o dispositivo móvel31.
+Métodos de Emparelhamento e Configuração de Leitores de Mão
+Os leitores portáteis de marcas especializadas operam emulando um teclado externo quando conectados a um smartphone ou tablet33. O fluxo técnico para garantir a máxima eficiência na entrada de dados baseia-se nos seguintes passos:
+            1. Configuração de Idioma de Entrada: Para evitar erros de digitação e garantir que os caracteres numéricos sejam interpretados de forma correta pelo sistema operacional móvel, o leitor deve ser configurado para o padrão de teclado português do Brasil (ABNT2)33. Isto é feito lendo os códigos de configuração específicos fornecidos no manual do fabricante, rotulados como "Keyboard Language - Brazil" ou "Portuguese"33.
+            2. Configuração do Sufixo de Confirmação (Terminator Suffix): Para acelerar as pesquisas nos portais web (como GS1 ou Cosmos) sem que o utilizador precise de tocar no ecrã do telemóvel para submeter a pesquisa após a leitura, deve-se configurar o leitor para aplicar automaticamente uma quebra de linha ou confirmação (Carriage Return - CR ou Enter)33. O utilizador localiza no manual a secção "Suffix" ou "Data Formatting" e faz a leitura do código "Enter" ou "CR"33. Desta forma, o cursor do browser salta automaticamente para a linha seguinte ou submete o formulário de busca de imediato ao ler o código33.
+            3. Modos de Digitalização Contínua: Em processos de inventariação rápida, os leitores móveis devem ser configurados para o modo de leitura por deteção automática ou modo de digitalização contínua34. Sob esta configuração, os sensores laser ou CMOS mantêm-se ativos e leem instantaneamente qualquer código de barras que passe à frente do dispositivo, dispensando a necessidade de pressionar o gatilho físico para cada peça34.
+            4. Restauração de Padrões (Factory Reset): Caso o leitor comece a comportar-se de forma irregular devido a leituras acidentais de códigos de configuração, o utilizador pode restabelecer as definições originais escaneando o código "Factory Reset" ou "Restore Defaults", o que limpa as personalizações anteriores e reinicia o firmware do equipamento33.
+Conclusões e Recomendações Estratégicas
+A verificação de códigos de peças automóveis no Brasil é uma tarefa técnica que requer a seleção adequada do portal e do método de captura de imagem em função do tipo de produto1.
+Para peças novas, as pesquisas devem ser direcionadas para o portal de dados da GS1 Brasil para validar a autenticidade estrutural do GTIN1, ou para o Bluesoft Cosmos para obter dados fiscais detalhados, como NCM e CEST14. O escaneamento de códigos lineares (EAN-13) pela câmara do telemóvel via web é facilitado por descodificadores online que operam diretamente no browser, minimizando os entraves da instalação de aplicações de terceiros27.
+Para peças usadas, a prioridade deve ser a garantia de conformidade jurídica2. O utilizador deve recorrer exclusivamente aos portais eletrónicos dos Detrans estaduais (como o registo de desmontes de São Paulo, o portal Peça Legal RS ou o sistema do Espírito Santo)2. O escaneamento do QR Code presente nas etiquetas destrutivas das autopeças assegura que o consumidor não se envolve no crime de receptação de veículos roubados2. Ao mesmo tempo, esta prática fomenta a economia circular, certificando que o componente cumpre as normas de segurança viária e as diretivas de proteção ambiental estipuladas por lei7.
+Referências citadas
+            1. Consultar Código de Barras de Produtos GTIN: como fazer - GS1 Brasil, https://www.gs1br.org/consultar-dados-de-produtos
+            2. Detran|ES lança 'Peça Legal' para regulamentar mercado de peças usadas e combater roubo de veículos, https://detran.es.gov.br/Not%C3%ADcia/detran-es-lanca-peca-legal-para-regulamentar-mercado-de-pecas-usadas-e-combater-roubo-de-veiculos
+            3. Pesquisar por Peças ou Número de Etiqueta - Portal de Serviços do Estado de São Paulo, https://servicos.sp.gov.br/fcarta/7BD0A8CC-165E-444A-833E-137B78058EE1
+            4. Código de Barras para Peças Automotivas de Motos e Carros, https://codigosdebarrasbrasil.com.br/codigos-de-barras-pecas-motos-carros/
+            5. Brasil Códigos de Barras 0789, https://brasilcodigos.com.br/
+            6. Api Código de Barras automatizar o cadastro de produtos - Banco de Dados - Projeto ACBr, https://www.projetoacbr.com.br/forum/topic/79987-api-c%C3%B3digo-de-barras-automatizar-o-cadastro-de-produtos/
+            7. Lei do desmonte - Âmbito Jurídico, https://ambitojuridico.com.br/lei-do-desmonte/
+            8. Instruções - Peça Legal RS - Detran/RS, https://pecalegal.detran.rs.gov.br/cdv-portal/mod-consulta/informacoes.xhtml
+            9. Peças usadas de automóveis terão rastreamento on-line - Biblioteca Jurídica, https://www.bibliotecajuridica.sp.gov.br/pecas-usadas-de-automoveis-terao-rastreamento-on-line/
+            10. Conheça o QR CODE e a etiqueta do Detran SP nas peças usadas e desmanche, https://www.youtube.com/watch?v=hu_sco-YW3Y
+            11. resolucao_969_2022-contran.pdf - DETRAN/PR, https://www.detran.pr.gov.br/sites/default/arquivos_restritos/files/documento/2022-07/resolucao_969_2022-contran.pdf
+            12. Verified by GS1 I GS1 Brasil, https://verifiedbygs1.gs1br.org/
+            13. Bluesoft Cosmos - App Store, https://apps.apple.com/br/app/bluesoft-cosmos/id1036307593
+            14. Buscar produtos por código de barras (GTIN/EAN) - Bluesoft Cosmos, https://cosmos.bluesoft.com.br/buscar_produtos_por_codigo_de_barras
+            15. CEST 01 - Autopeças - Produtos e NCMS - Bluesoft Cosmos, https://cosmos.bluesoft.com.br/tabelas/cest/01-autopecas
+            16. API de Produtos por Código de Barras | Busca Unificada, https://api-produtos.seunegocionanuvem.com.br/
+            17. API GTIN: OSCBR, http://www.gtin.rscsistemas.com.br/
+            18. Busca por Código da Peça - Canal da peça | autopecas, https://www.canaldapeca.com.br/categoria/autopecas/busca-por-codigo-da-peca
+            19. Cosmos NCM: Veja Como Consultar Certo - e-Auditoria, https://www.e-auditoria.com.br/blog/cosmos-ncm-o-que-e-e-como-pesquisar/
+            20. TecDoc Catalogue - TecAlliance do Brasil, https://tecalliance.com.br/tecdoc-catalogue/
+            21. Aplicativo pesquisa peças provenientes de desmanches - Portal O Carreteiro, https://ocarreteiro.com.br/seguranca/aplicativo-com-leitor-de-qr-code-pesquisa-pecas-provenientes-de-desmanches/
+            22. Leitor de QR Code do Detran permite rastrear peças de desmanches - Biblioteca Jurídica, http://bibliotecajuridica.des.sp.gov.br/leitor-de-qr-code-do-detran-permite-rastrear-pecas-de-desmanches/
+            23. App "Peça Legal" Detran SP dá segurança ao comprar peças - InstaCarro, https://www.instacarro.com/blog/dicas/app-peca-legal-do-detran-sp
+            24. Peça Legal RS - Detran/RS - PROCERGS, https://secweb.procergs.com.br/cdv-portal/mod-consulta/credenciados.xhtml?page=44
+            25. Manual de Procedimentos de Registro de Veículos, http://www.sindergs.com.br/manual/manual_atualizado_mai_21.pdf
+            26. Peça Legal: Detran lança serviço para regulamentar peças usadas e evitar roubos, https://eshoje.com.br/espirito-santo/2025/08/peca-legal-detran-lanca-servico-para-regulamentar-pecas-usadas-e-evitar-roubos/
+            27. Escanear códigos de barras - My QR Code, https://myqrcode.com/pt/barcode-scanner
+            28. Como escanear QR Codes com Android, https://br.qr-code-generator.com/guides/scan-qr-code-android/
+            29. QR code reader Barcode scanner – Apps no Google Play, https://play.google.com/store/apps/details/QR_Code_Reader_Scanner_App_Barcode_Generator?id=com.qrcodereader.barcode.generator.shoppinglist.scannerapp&hl=pt
+            30. Ler códigos QR com o app Câmera do Google, https://support.google.com/camerafromgoogle/answer/12033278?hl=pt-BR
+            31. Leitor De Codigo De Barras - Mercado Livre, https://lista.mercadolivre.com.br/leitor-de-codigo-de-barras
+            32. Leitor Código De Barras Tela - Mercado Livre, https://lista.mercadolivre.com.br/leitor-c%C3%B3digo-de-barras-tela
+            33. Como configurar leitor de código de barras no computador - Mercado Livre, https://www.mercadolivre.com.br/blog/como-configurar-leitor-de-codigo-de-barras
+            34. Leitor Código De Barras Qrcode 2d1d Bluetooth Sem Fio Cor Preto Tipo de conector do cabo USB | Frete grátis - Mercado Livre, https://www.mercadolivre.com.br/leitor-codigo-de-barras-qrcode-2d1d-bluetooth-sem-fio-cor-preto-tipo-de-conector-do-cabo-usb/p/MLB39987204
+            35. Leitor Código De Barras Qr Code 2d Bluetooth Suporte Celular Cor Preto Tipo de conector do cabo USB WIRELESS BLUETOOTH - Mercado Livre, https://www.mercadolivre.com.br/leitor-codigo-de-barras-qr-code-2d-bluetooth-suporte-celular-cor-preto-tipo-de-conector-do-cabo-usb-wireless-bluetooth/p/MLB38479950
+            36. Estoque do site Peça Legal chega a quase 10 milhões de peças usadas de veículos, https://www.detran.rs.gov.br/estoque-do-site-peca-legal-chega-a-quase-10-milhoes-de-pecas-usadas-de-veiculos

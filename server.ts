@@ -71,6 +71,40 @@ async function startServer() {
     }
   });
 
+  // API: Bluesoft Cosmos Integration (GTIN/EAN)
+  app.get("/api/cosmos/gtin/:gtin", async (req, res) => {
+    const { gtin } = req.params;
+    const cosmosKey = process.env.COSMOS_API_KEY;
+
+    if (!cosmosKey) {
+      return res.status(503).json({ error: "Chave COSMOS_API_KEY não configurada." });
+    }
+
+    try {
+      // Usando fetch nativo (Node 18+)
+      const response = await fetch(`https://api.cosmos.bluesoft.com.br/gtins/${gtin}.json`, {
+        method: "GET",
+        headers: {
+          "X-Cosmos-Token": cosmosKey,
+          "User-Agent": "PowerFindParts/1.0"
+        }
+      });
+
+      if (!response.ok) {
+        if (response.status === 404) {
+          return res.status(404).json({ error: "Produto não encontrado no Cosmos." });
+        }
+        throw new Error(`Cosmos API respondeu com status ${response.status}`);
+      }
+
+      const data = await response.json();
+      res.json(data);
+    } catch (error: any) {
+      console.error("Erro ao consultar Cosmos API:", error);
+      res.status(500).json({ error: "Erro interno ao consultar o produto.", details: error.message });
+    }
+  });
+
   // Vite Integration
   if (process.env.NODE_ENV !== "production") {
     console.log("Server running in DEVELOPMENT mode. Mounting Vite dev server...");

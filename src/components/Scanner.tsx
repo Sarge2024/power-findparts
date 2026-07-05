@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Part, Vehicle, VehicleLink } from '../types';
+import { Part, Vehicle, VehicleLink, CosmosPart } from '../types';
 import { IMAGE_LINKS } from '../initialData';
 import { 
   Camera, 
@@ -12,7 +12,9 @@ import {
   Car, 
   Truck,
   X,
-  AlertCircle
+  AlertCircle,
+  Search,
+  Database
 } from 'lucide-react';
 
 interface ScannerProps {
@@ -20,6 +22,9 @@ interface ScannerProps {
   vehicles: Vehicle[];
   links: VehicleLink[];
   preSelectedPart: Part | null;
+  cosmosParts: CosmosPart[];
+  onAddCosmosPart: (part: Omit<CosmosPart, 'id' | 'timestamp'>) => void;
+  onRemoveCosmosPart: (id: string) => void;
   onAddLink: (partNumber: string, vehicleId: string) => void;
   onRemoveLink: (linkId: string) => void;
   onFinalize: () => void;
@@ -31,6 +36,9 @@ export default function Scanner({
   vehicles,
   links,
   preSelectedPart,
+  cosmosParts,
+  onAddCosmosPart,
+  onRemoveCosmosPart,
   onAddLink,
   onRemoveLink,
   onFinalize,
@@ -44,6 +52,10 @@ export default function Scanner({
   const [useRealCamera, setUseRealCamera] = useState<boolean>(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [cameraError, setCameraError] = useState<string | null>(null);
+
+  // Cosmos States
+  const [gtinInput, setGtinInput] = useState<string>('');
+  const [isSearchingCosmos, setIsSearchingCosmos] = useState<boolean>(false);
 
   useEffect(() => {
     if (preSelectedPart) {
@@ -105,6 +117,30 @@ export default function Scanner({
 
   // Get current selected vehicle details
   const currentVehicle = vehicles.find(v => v.id === selectedVehicleId) || vehicles[0];
+
+  const handleSearchCosmos = async () => {
+    if (!gtinInput) return;
+    setIsSearchingCosmos(true);
+    try {
+      const response = await fetch(`/api/cosmos/gtin/${gtinInput}`);
+      if (!response.ok) throw new Error('Produto não encontrado');
+      const data = await response.json();
+      
+      onAddCosmosPart({
+        gtin: String(data.gtin),
+        description: data.description,
+        brand: data.brand?.name || 'Desconhecida',
+        thumbnail: data.thumbnail || '',
+        vehicleId: selectedVehicleId,
+        vehicleName: `${currentVehicle.model} ${currentVehicle.year} BR`
+      });
+      setGtinInput('');
+    } catch (err: any) {
+      onShowToast(err.message || "Erro na consulta ao Cosmos.");
+    } finally {
+      setIsSearchingCosmos(false);
+    }
+  };
 
   return (
     <div id="scanner-section" className="space-y-6 max-w-lg mx-auto bg-white p-4 sm:p-5 rounded-md border border-outline-variant/10 shadow-sm">
@@ -177,8 +213,95 @@ export default function Scanner({
         )}
       </section>
 
+      {/* Cosmos GTIN Search Integration */}
+      <div id="cosmos-integration" className="bg-[#e4eff7] p-3 sm:p-4 rounded-md border border-[#c4e0f5] shadow-inner space-y-3">
+        <div className="flex items-center gap-2 text-[#00579e]">
+          <Database className="w-4 h-4" />
+          <h3 className="font-headline text-xs font-black uppercase tracking-widest">
+            BUSCA COSMOS (CÓDIGO DE BARRAS)
+          </h3>
+        </div>
+        <p className="text-[10px] text-[#00579e]/80 font-bold uppercase tracking-wider mb-2">
+          Veículo Alvo: {currentVehicle.brand} {currentVehicle.model} ({currentVehicle.year})
+        </p>
+        <div className="flex gap-2">
+          <input 
+            type="text"
+            value={gtinInput}
+            onChange={(e) => setGtinInput(e.target.value)}
+            placeholder="Ex: 7894900011517"
+            className="flex-1 px-3 py-2 text-xs rounded border border-[#c4e0f5] focus:outline-none focus:ring-2 focus:ring-[#00579e] bg-white font-mono"
+            onKeyDown={(e) => e.key === 'Enter' && handleSearchCosmos()}
+          />
+          <button 
+            onClick={handleSearchCosmos}
+            disabled={isSearchingCosmos || !gtinInput}
+            className="bg-[#00579e] text-white px-4 py-2 rounded text-[10px] font-black uppercase tracking-wider hover:bg-[#004780] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+          >
+            {isSearchingCosmos ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <Search className="w-3.5 h-3.5" />}
+            Consultar
+          </button>
+        </div>
+      </div>
+
+      {/* Cosmos Linked Parts Table */}
+      {cosmosParts.length > 0 && (
+        <div id="cosmos-table-section" className="space-y-3 pt-2">
+          <div className="flex items-center justify-between px-1">
+            <h4 className="text-[10px] font-extrabold text-[#00579e] uppercase tracking-widest">
+              PEÇAS COSMOS VINCULADAS AO SISTEMA ({cosmosParts.length})
+            </h4>
+          </div>
+          <div className="overflow-hidden rounded-md border border-outline-variant/15">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse text-xs bg-white">
+                <thead>
+                  <tr className="bg-surface-container-low border-b border-outline-variant/10 text-[9px] font-black uppercase tracking-widest text-outline">
+                    <th className="px-3 py-2.5">Descrição</th>
+                    <th className="px-3 py-2.5">GTIN</th>
+                    <th className="px-3 py-2.5 hidden sm:table-cell">Marca</th>
+                    <th className="px-3 py-2.5">Veículo Alvo</th>
+                    <th className="px-3 py-2.5 text-center">Ações</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-outline-variant/10">
+                  {cosmosParts.map((cp) => (
+                    <tr key={cp.id} className="hover:bg-surface-container-low/50">
+                      <td className="px-3 py-3">
+                        <div className="flex items-center gap-2">
+                          {cp.thumbnail && (
+                            <img src={cp.thumbnail} alt={cp.gtin} className="w-8 h-8 rounded object-cover border border-outline-variant/10" />
+                          )}
+                          <span className="font-bold text-primary line-clamp-2 leading-tight">{cp.description}</span>
+                        </div>
+                      </td>
+                      <td className="px-3 py-3 font-mono text-[10px] text-surface-tint font-bold">{cp.gtin}</td>
+                      <td className="px-3 py-3 font-semibold text-outline hidden sm:table-cell">{cp.brand}</td>
+                      <td className="px-3 py-3">
+                        <span className="bg-primary-container text-on-primary-container px-2 py-0.5 rounded text-[9px] font-bold tracking-tight">
+                          {cp.vehicleName}
+                        </span>
+                      </td>
+                      <td className="px-3 py-3 text-center">
+                        <button 
+                          onClick={() => onRemoveCosmosPart(cp.id)}
+                          className="p-1.5 text-error hover:bg-error/10 rounded transition-all active:scale-90"
+                          title="Remover Peça"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Recognized Status Ribbon */}
-      <div id="status-ribbon" className="bg-[#e2f1e6] border-l-4 border-[#3ca25d] px-3.5 py-2 flex items-center justify-between rounded-r">
+      <div id="status-ribbon" className="bg-[#e2f1e6] border-l-4 border-[#3ca25d] px-3.5 py-2 flex items-center justify-between rounded-r mt-4">
         <div className="flex items-center gap-2 text-[#24703c]">
           <CheckCircle2 className="w-4 h-4 fill-current" />
           <span className="font-headline text-xs font-black uppercase tracking-wider">PEÇA RECONHECIDA</span>

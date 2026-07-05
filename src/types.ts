@@ -42,3 +42,14 @@ export interface TechGroup {
   icon: string;
   subgroupCount: number;
 }
+
+export interface CosmosPart {
+  id: string;
+  gtin: string;
+  description: string;
+  brand: string;
+  thumbnail: string;
+  vehicleId: string;
+  vehicleName: string;
+  timestamp: string;
+}
