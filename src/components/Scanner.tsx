@@ -98,14 +98,18 @@ export default function Scanner({
       }, 100);
     } else {
       if (html5QrCodeRef.current && html5QrCodeRef.current.isScanning) {
-        html5QrCodeRef.current.stop().catch(err => console.error(err));
+        html5QrCodeRef.current.stop().then(() => {
+          html5QrCodeRef.current?.clear();
+        }).catch(err => console.error(err));
       }
     }
 
     return () => {
       isMounted = false;
       if (html5QrCodeRef.current && html5QrCodeRef.current.isScanning) {
-        html5QrCodeRef.current.stop().catch(err => console.error(err));
+        html5QrCodeRef.current.stop().then(() => {
+          html5QrCodeRef.current?.clear();
+        }).catch(err => console.error(err));
       }
     };
   }, [useRealCamera, onShowToast]);
@@ -179,9 +183,9 @@ export default function Scanner({
 
       {/* Scanner Viewport Section */}
       <section id="scanner-viewport" className="relative h-64 sm:h-80 bg-black rounded-md overflow-hidden flex items-center justify-center shadow-inner">
-        {useRealCamera ? (
-          <div id="reader-container" className="w-full h-full [&>video]:w-full [&>video]:h-full [&>video]:object-cover" />
-        ) : (
+        <div id="reader-container" className={`w-full h-full [&>video]:w-full [&>video]:h-full [&>video]:object-cover ${useRealCamera ? 'block' : 'hidden'}`} />
+        
+        {!useRealCamera && (
           <div className="absolute inset-0 bg-cover bg-center transition-all duration-700 opacity-85" style={{ backgroundImage: `url(${scannedPart.number.includes('025 B') ? IMAGE_LINKS.alternatorReal : IMAGE_LINKS.scannerFeed})` }}></div>
         )}
 
