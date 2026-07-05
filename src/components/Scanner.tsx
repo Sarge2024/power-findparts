@@ -123,7 +123,7 @@ export default function Scanner({
       </div>
 
       {/* Scanner Viewport Section */}
-      <section id="scanner-viewport" className="relative h-80 sm:h-96 bg-black rounded-md overflow-hidden flex items-center justify-center shadow-inner">
+      <section id="scanner-viewport" className="relative h-64 sm:h-80 bg-black rounded-md overflow-hidden flex items-center justify-center shadow-inner">
         {useRealCamera ? (
           <video 
             ref={videoRef} 
@@ -178,7 +178,7 @@ export default function Scanner({
       </section>
 
       {/* Recognized Status Ribbon */}
-      <div id="status-ribbon" className="bg-[#e2f1e6] border-l-4 border-[#3ca25d] px-4 py-2.5 flex items-center justify-between rounded-r">
+      <div id="status-ribbon" className="bg-[#e2f1e6] border-l-4 border-[#3ca25d] px-3.5 py-2 flex items-center justify-between rounded-r">
         <div className="flex items-center gap-2 text-[#24703c]">
           <CheckCircle2 className="w-4 h-4 fill-current" />
           <span className="font-headline text-xs font-black uppercase tracking-wider">PEÇA RECONHECIDA</span>
@@ -187,7 +187,7 @@ export default function Scanner({
       </div>
 
       {/* Scanned Result Details Card */}
-      <div id="scanned-card" className="bg-surface-container-low p-4 rounded-md border border-outline-variant/15 shadow-inner">
+      <div id="scanned-card" className="bg-surface-container-low p-3.5 sm:p-4 rounded-md border border-outline-variant/15 shadow-inner">
         <div className="flex justify-between items-start mb-3">
           <div>
             <p className="text-[9px] font-black text-outline uppercase tracking-widest">PEÇA ESCANEADA</p>
@@ -210,7 +210,7 @@ export default function Scanner({
       </div>
 
       {/* Linking Interface */}
-      <div id="linking-panel" className="bg-primary p-5 rounded-md text-on-primary space-y-4 shadow-md relative overflow-hidden">
+      <div id="linking-panel" className="bg-primary p-4 sm:p-5 rounded-md text-on-primary space-y-3 sm:space-y-4 shadow-md relative overflow-hidden">
         <div className="flex items-center gap-2 border-b border-white/10 pb-3">
           <Link className="w-4 h-4 text-tertiary-fixed" />
           <h3 className="font-headline text-xs font-black uppercase tracking-widest">
@@ -274,14 +274,14 @@ export default function Scanner({
               return (
                 <div 
                   key={link.id} 
-                  className="bg-surface-container-low p-3.5 rounded-md flex items-center justify-between border border-outline-variant/10 hover:bg-surface-container transition-colors group"
+                  className="bg-surface-container-low p-2.5 sm:p-3 rounded-md flex items-center justify-between border border-outline-variant/10 hover:bg-surface-container transition-colors group"
                 >
-                  <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 bg-white rounded-sm flex items-center justify-center border border-outline-variant/10 shadow-sm">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 bg-white rounded-sm flex items-center justify-center border border-outline-variant/10 shadow-sm flex-shrink-0">
                       {linkedVehicle?.model.includes('Saveiro') ? (
-                        <Truck className="w-4 h-4 text-primary" />
+                        <Truck className="w-3.5 h-3.5 text-primary" />
                       ) : (
-                        <Car className="w-4 h-4 text-primary" />
+                        <Car className="w-3.5 h-3.5 text-primary" />
                       )}
                     </div>
                     <div>
@@ -291,10 +291,10 @@ export default function Scanner({
                   </div>
                   <button 
                     onClick={() => onRemoveLink(link.id)}
-                    className="opacity-80 md:opacity-0 group-hover:opacity-100 p-2 text-error hover:bg-error/10 rounded transition-all active:scale-90"
+                    className="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 p-2 text-error hover:bg-error/10 rounded transition-all active:scale-90"
                     title="Remover Vínculo"
                   >
-                    <Trash2 className="w-4 h-4" />
+                    <Trash2 className="w-3.5 h-3.5" />
                   </button>
                 </div>
               );

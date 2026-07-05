@@ -38,6 +38,18 @@ export default function App() {
   // App View Modes
   const [viewMode, setViewMode] = useState<"mobile" | "fullscreen">("mobile");
 
+  // Real mobile viewport detection
+  const [isMobileViewport, setIsMobileViewport] = useState<boolean>(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobileViewport(window.innerWidth < 768);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   // Core Reactive Database State (Linked to localStorage)
   const [parts, setParts] = useState<Part[]>(() => {
     const saved = localStorage.getItem("pf_parts");
@@ -269,7 +281,7 @@ export default function App() {
 
       {/* Floating Action Button (Only shown on Catalog view to go directly to scan) */}
       {currentTab === "catalog" && (
-        <div id="floating-action" className="fixed bottom-24 right-6 z-40">
+        <div id="floating-action" className="absolute bottom-24 right-6 z-40">
           <button 
             onClick={() => setCurrentTab("scanner")}
             className="w-14 h-14 bg-[#002630] text-white hover:bg-primary-container rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 active:scale-90 border-b-4 border-tertiary-fixed cursor-pointer"
@@ -281,7 +293,7 @@ export default function App() {
       )}
 
       {/* Persistent Bottom Mobile Navigation Bar */}
-      <nav id="bottom-bar" className="fixed bottom-0 left-0 w-full bg-white border-t border-outline-variant/15 flex justify-around items-center h-20 shadow-[0_-4px_12px_rgba(0,0,0,0.03)] z-40">
+      <nav id="bottom-bar" className="absolute bottom-0 left-0 w-full bg-white border-t border-outline-variant/15 flex justify-around items-center h-20 shadow-[0_-4px_12px_rgba(0,0,0,0.03)] z-40">
         
         {/* Tab 1: Catalog */}
         <button 
@@ -358,7 +370,7 @@ export default function App() {
       {/* Global Toast Notification */}
       <div 
         id="toast-notification"
-        className={`fixed bottom-24 left-1/2 -translate-x-1/2 bg-[#2e3132] text-white px-5 py-3 rounded-full shadow-2xl flex items-center gap-3 transition-all duration-500 z-50 ${
+        className={`absolute bottom-24 left-1/2 -translate-x-1/2 bg-[#2e3132] text-white px-5 py-3 rounded-full shadow-2xl flex items-center gap-3 transition-all duration-500 z-50 ${
           showToast ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-16 opacity-0 scale-90 pointer-events-none'
         }`}
       >
@@ -368,6 +380,14 @@ export default function App() {
 
     </div>
   );
+
+  if (isMobileViewport) {
+    return (
+      <div id="pwa-mobile-root" className="w-full h-screen bg-[#f8fafb]">
+        {mainAppHtml}
+      </div>
+    );
+  }
 
   return (
     <div id="app-root-shell" className="min-h-screen bg-slate-900 flex flex-col items-center p-0 md:p-6 justify-center">

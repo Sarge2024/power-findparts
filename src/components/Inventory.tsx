@@ -69,10 +69,10 @@ export default function Inventory({
       </div>
 
       {/* Main Grid: Left is Linked list, Right is Logs */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
         {/* Left 2 cols: Linked list and search */}
         <div className="lg:col-span-2 space-y-4">
-          <div className="bg-white p-4 rounded-md border border-outline-variant/10 shadow-sm space-y-4">
+          <div className="bg-white p-3.5 sm:p-4 rounded-md border border-outline-variant/10 shadow-sm space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <h3 className="font-headline text-sm font-black text-primary uppercase tracking-tight flex items-center gap-1.5">
                 <Layers className="w-4 h-4 text-surface-tint" /> Relações Ativas
@@ -97,10 +97,10 @@ export default function Inventory({
                   const vehicle = vehicles.find(v => v.id === link.vehicleId);
 
                   return (
-                    <div key={link.id} className="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-surface-container-low/30 px-2 rounded transition-colors group">
-                      <div className="space-y-1">
+                    <div key={link.id} className="py-2.5 sm:py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 hover:bg-surface-container-low/30 px-2 rounded transition-colors group">
+                      <div className="space-y-0.5">
                         <div className="flex items-center gap-2">
-                          <span className="text-[10px] font-black uppercase text-outline tracking-wider bg-surface-container px-2 py-0.5 rounded">
+                          <span className="text-[9px] font-black uppercase text-outline tracking-wider bg-surface-container px-2 py-0.5 rounded">
                             {part?.extraInfo || "OEM SPEC"}
                           </span>
                           <span className="text-xs font-mono font-black text-primary">
@@ -111,12 +111,12 @@ export default function Inventory({
                         <p className="text-[10px] text-outline">Fabricante: {part?.manufacturer}</p>
                       </div>
 
-                      <div className="flex items-center gap-3 sm:text-right">
-                        <div className="w-8 h-8 rounded-full bg-primary-container/10 flex items-center justify-center">
+                      <div className="flex items-center gap-2.5 sm:text-right">
+                        <div className="w-7 h-7 rounded-full bg-primary-container/10 flex items-center justify-center flex-shrink-0">
                           {vehicle?.model.includes('Saveiro') ? (
-                            <Truck className="w-4 h-4 text-primary" />
+                            <Truck className="w-3.5 h-3.5 text-primary" />
                           ) : (
-                            <Car className="w-4 h-4 text-primary" />
+                            <Car className="w-3.5 h-3.5 text-primary" />
                           )}
                         </div>
                         <div className="sm:text-right">
@@ -125,7 +125,7 @@ export default function Inventory({
                         </div>
                       </div>
 
-                      <div className="flex items-center justify-end">
+                      <div className="flex items-center justify-end sm:justify-start">
                         <button
                           onClick={() => {
                             onRemoveLink(link.id);
@@ -152,7 +152,7 @@ export default function Inventory({
 
         {/* Right 1 col: Technical History logs */}
         <div className="space-y-4">
-          <div className="bg-[#eceeef] p-5 rounded-md border border-outline-variant/10 shadow-sm space-y-4 flex flex-col h-[500px]">
+          <div className="bg-[#eceeef] p-4 sm:p-5 rounded-md border border-outline-variant/10 shadow-sm space-y-4 flex flex-col h-[320px] sm:h-[400px] lg:h-[500px]">
             <div className="flex justify-between items-center border-b border-outline-variant/20 pb-3">
               <h3 className="font-headline text-xs font-black text-primary uppercase tracking-wider flex items-center gap-1.5">
                 <ClipboardList className="w-4 h-4 text-primary" /> Log de Atividades

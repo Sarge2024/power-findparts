@@ -90,11 +90,11 @@ export default function AiAssistant() {
   };
 
   return (
-    <div id="ai-assistant-container" className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+    <div id="ai-assistant-container" className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 max-w-5xl mx-auto">
       {/* Suggestions / Prompt helpers column */}
-      <div className="space-y-4">
-        <div className="bg-primary text-on-primary p-5 rounded-md shadow-sm relative overflow-hidden border border-outline-variant/10">
-          <div className="relative z-10 space-y-3">
+      <div className="space-y-4 order-2 lg:order-1">
+        <div className="bg-primary text-on-primary p-4 sm:p-5 rounded-md shadow-sm relative overflow-hidden border border-outline-variant/10">
+          <div className="relative z-10 space-y-2.5">
             <h3 className="font-headline text-sm font-black uppercase tracking-wider flex items-center gap-1.5">
               <Sparkles className="w-4 h-4 text-tertiary-fixed" /> Inteligência Power Find
             </h3>
@@ -108,7 +108,7 @@ export default function AiAssistant() {
           </div>
         </div>
 
-        <div className="bg-[#eceeef] p-5 rounded-md border border-outline-variant/10 shadow-sm space-y-3.5">
+        <div className="bg-[#eceeef] p-4 sm:p-5 rounded-md border border-outline-variant/10 shadow-sm space-y-3">
           <h4 className="text-[10px] font-black uppercase tracking-widest text-primary/60 flex items-center gap-1">
             <HelpCircle className="w-3.5 h-3.5" /> Perguntas Frequentes
           </h4>
@@ -129,7 +129,7 @@ export default function AiAssistant() {
       </div>
 
       {/* Main Chat Interface column */}
-      <div className="lg:col-span-2 bg-white rounded-md border border-outline-variant/15 shadow-sm flex flex-col h-[520px]">
+      <div className="lg:col-span-2 bg-white rounded-md border border-outline-variant/15 shadow-sm flex flex-col h-[380px] sm:h-[450px] lg:h-[520px] order-1 lg:order-2">
         {/* Chat Header */}
         <div className="px-4 py-3 border-b border-outline-variant/10 flex items-center justify-between bg-surface-container-low">
           <div className="flex items-center gap-2">
