@@ -86,16 +86,27 @@ export default function Scanner({
             if (hasScanned || !isMounted) return;
             hasScanned = true;
 
+            try {
+              if (html5QrCodeRef.current?.getState() === 2) {
+                html5QrCodeRef.current.pause(true);
+              }
+            } catch (e) {}
+
             // Sucesso na leitura
             setGtinInput(decodedText);
             onShowToast("Código detectado: " + decodedText);
             
-            // Pequeno delay para a lib html5-qrcode finalizar o loop interno antes do unmount/stop
-            setTimeout(() => {
-              if (isMounted) {
-                setUseRealCamera(false);
-              }
-            }, 600);
+            if (html5QrCodeRef.current && html5QrCodeRef.current.isScanning) {
+              html5QrCodeRef.current.stop().then(() => {
+                html5QrCodeRef.current?.clear();
+                if (isMounted) setUseRealCamera(false);
+              }).catch(err => {
+                console.error("Erro ao parar a câmera:", err);
+                if (isMounted) setUseRealCamera(false);
+              });
+            } else {
+              if (isMounted) setUseRealCamera(false);
+            }
           },
           (errorMessage) => {
             // erros de leitura quadro-a-quadro (ignorar)
