@@ -4,6 +4,7 @@ import {
   INITIAL_PARTS, 
   INITIAL_VEHICLES, 
   INITIAL_TECH_GROUPS, 
+  INITIAL_TECH_SUBGROUPS,
   INITIAL_LINKS, 
   INITIAL_LOGS 
 } from './initialData';
@@ -211,6 +212,7 @@ export default function App() {
             vehicles={INITIAL_VEHICLES}
             links={links}
             techGroups={INITIAL_TECH_GROUPS}
+            techSubgroups={INITIAL_TECH_SUBGROUPS}
             recentLogs={logs}
             onSelectPartForLinking={handleSelectPartForLinking}
             onNavigateToTab={setCurrentTab}

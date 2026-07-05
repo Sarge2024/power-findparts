@@ -1,4 +1,4 @@
-import { Part, Vehicle, VehicleLink, TechGroup, ActivityLog } from './types';
+import { Part, Vehicle, VehicleLink, TechGroup, TechSubgroup, ActivityLog } from './types';
 
 export const INITIAL_PARTS: Part[] = [
   {
@@ -8,7 +8,8 @@ export const INITIAL_PARTS: Part[] = [
     priceEst: "R$ 1.840,00",
     manufacturer: "Valeo Automotive",
     inventoryCode: "BR-903-000-E1",
-    group: "Elétrica"
+    group: "Elétrica",
+    subgroup: "Alternador"
   },
   {
     number: "030 903 137 AE",
@@ -17,7 +18,8 @@ export const INITIAL_PARTS: Part[] = [
     priceEst: "R$ 145,50",
     manufacturer: "Valeo Automotive",
     inventoryCode: "BR-903-000-E2",
-    group: "Elétrica"
+    group: "Elétrica",
+    subgroup: "Correias"
   },
   {
     number: "5Z0 915 105 A",
@@ -26,7 +28,8 @@ export const INITIAL_PARTS: Part[] = [
     priceEst: "R$ 620,00",
     manufacturer: "Moura S.A.",
     inventoryCode: "BR-903-000-E3",
-    group: "Elétrica"
+    group: "Elétrica",
+    subgroup: "Bateria"
   },
   {
     number: "02T 911 023 G",
@@ -35,7 +38,8 @@ export const INITIAL_PARTS: Part[] = [
     priceEst: "R$ 980,00",
     manufacturer: "Bosch Automotive",
     inventoryCode: "BR-903-000-E4",
-    group: "Elétrica"
+    group: "Elétrica",
+    subgroup: "Motor de Partida"
   }
 ];
 
@@ -71,6 +75,19 @@ export const INITIAL_TECH_GROUPS: TechGroup[] = [
   { id: "suspensao", name: "Suspensão", groupCode: "GRP. 4", icon: "settings_input_component", subgroupCount: 8 },
   { id: "motor", name: "Motor", groupCode: "GRP. 1", icon: "oil_barrel", subgroupCount: 22 },
   { id: "rodas_freios", name: "Rodas e Freios", groupCode: "GRP. 6", icon: "tire_repair", subgroupCount: 5 }
+];
+
+export const INITIAL_TECH_SUBGROUPS: TechSubgroup[] = [
+  { id: "sg-1", groupId: "eletrica", name: "Alternador" },
+  { id: "sg-2", groupId: "eletrica", name: "Correias" },
+  { id: "sg-3", groupId: "eletrica", name: "Bateria" },
+  { id: "sg-4", groupId: "eletrica", name: "Motor de Partida" },
+  { id: "sg-5", groupId: "suspensao", name: "Amortecedores" },
+  { id: "sg-6", groupId: "suspensao", name: "Molas" },
+  { id: "sg-7", groupId: "motor", name: "Bloco do Motor" },
+  { id: "sg-8", groupId: "motor", name: "Cabeçote" },
+  { id: "sg-9", groupId: "rodas_freios", name: "Pastilhas de Freio" },
+  { id: "sg-10", groupId: "rodas_freios", name: "Discos de Freio" }
 ];
 
 export const INITIAL_LINKS: VehicleLink[] = [

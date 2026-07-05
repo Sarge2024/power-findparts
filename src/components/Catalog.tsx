@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Part, Vehicle, TechGroup, ActivityLog, VehicleLink } from '../types';
+import { Part, Vehicle, TechGroup, TechSubgroup, ActivityLog, VehicleLink } from '../types';
 import { IMAGE_LINKS } from '../initialData';
 import { 
   Wrench, 
@@ -13,7 +13,8 @@ import {
   CheckCircle2,
   Sliders,
   ChevronRight,
-  Info
+  Info,
+  Layers
 } from 'lucide-react';
 
 interface CatalogProps {
@@ -21,6 +22,7 @@ interface CatalogProps {
   vehicles: Vehicle[];
   links: VehicleLink[];
   techGroups: TechGroup[];
+  techSubgroups: TechSubgroup[];
   recentLogs: ActivityLog[];
   onSelectPartForLinking: (part: Part) => void;
   onNavigateToTab: (tab: string) => void;
@@ -33,6 +35,7 @@ export default function Catalog({
   vehicles,
   links,
   techGroups,
+  techSubgroups,
   recentLogs,
   onSelectPartForLinking,
   onNavigateToTab,
@@ -40,6 +43,7 @@ export default function Catalog({
   onSelectVehicle
 }: CatalogProps) {
   const [selectedGroup, setSelectedGroup] = useState<string>("Elétrica");
+  const [selectedSubgroup, setSelectedSubgroup] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [obdVoltage, setObdVoltage] = useState<number>(13.8);
   const [voltageAlert, setVoltageAlert] = useState<string>("Normal (Estável)");
@@ -47,10 +51,11 @@ export default function Catalog({
   // Filters
   const filteredParts = parts.filter(part => {
     const matchesGroup = part.group === selectedGroup;
+    const matchesSubgroup = selectedSubgroup ? part.subgroup === selectedSubgroup : true;
     const matchesSearch = part.number.toLowerCase().includes(searchQuery.toLowerCase()) || 
                           part.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           part.manufacturer.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesGroup && matchesSearch;
+    return matchesGroup && matchesSubgroup && matchesSearch;
   });
 
   const handleSimulateObd = () => {
@@ -69,84 +74,61 @@ export default function Catalog({
 
   return (
     <div id="catalog-section" className="space-y-4 sm:space-y-6">
-      {/* Dynamic Breadcrumbs (Industrial Precision Style) */}
-      <nav id="breadcrumbs" className="bg-surface-container-low px-3 py-2 sm:px-4 sm:py-3 rounded-md flex flex-wrap items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar border border-outline-variant/10">
-        <span className="text-on-surface-variant text-[9px] sm:text-[10px] font-bold uppercase tracking-widest flex items-center gap-1">
-          <Wrench className="w-3 h-3 text-primary/60" /> Hierarquia
-        </span>
-        <div className="flex items-center gap-1 sm:gap-1.5 whitespace-nowrap">
-          <ChevronRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-outline" />
-          <select 
-            value={currentVehicle.brand}
-            onChange={(e) => {
-              const matched = vehicles.find(v => v.brand === e.target.value);
-              if (matched) onSelectVehicle(matched);
-            }}
-            className="text-[11px] sm:text-xs font-headline font-extrabold text-primary bg-transparent border-none p-0 focus:ring-0 cursor-pointer hover:text-surface-tint uppercase"
-          >
-            <option value="Volkswagen">VW (Volkswagen)</option>
-          </select>
-
-          <ChevronRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-outline" />
-          <select 
-            value={currentVehicle.id}
-            onChange={(e) => {
-              const matched = vehicles.find(v => v.id === e.target.value);
-              if (matched) onSelectVehicle(matched);
-            }}
-            className="text-[11px] sm:text-xs font-headline font-extrabold text-primary bg-transparent border-none p-0 focus:ring-0 cursor-pointer hover:text-surface-tint uppercase"
-          >
-            {vehicles.map(v => (
-              <option key={v.id} value={v.id}>{v.model}</option>
-            ))}
-          </select>
-
-          <ChevronRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-outline" />
-          <span className="text-[11px] sm:text-xs font-headline font-bold text-primary">{currentVehicle.year}</span>
-          
-          <ChevronRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-outline" />
-          <span className="text-[10px] sm:text-xs font-headline font-bold text-tertiary-container bg-tertiary-fixed px-1.5 py-0.5 rounded text-[10px] sm:text-[11px] font-black uppercase">
-            {selectedGroup}
-          </span>
-        </div>
-      </nav>
-
-      {/* Hero Summary (Intentional Asymmetry) */}
-      <section id="catalog-hero" className="relative grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-6 items-center bg-white p-4 sm:p-6 rounded-md border border-outline-variant/15 overflow-hidden shadow-sm">
-        <div className="md:col-span-7 z-10 space-y-2 sm:space-y-3">
-          <p className="text-[9px] sm:text-[10px] uppercase tracking-widest font-extrabold text-surface-tint">Base Técnica Sagacitas</p>
-          <h2 className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold tracking-tight text-primary leading-tight">
-            Precisão de Peças Vinculadas.
-          </h2>
-          <p className="text-xs text-on-surface-variant leading-relaxed max-w-xl">
-            Navegue em grupos técnicos automotivos de alta densidade para o Volkswagen <span className="font-bold text-primary">{currentVehicle.model} ({currentVehicle.year})</span>. Selecione uma categoria e vincule componentes específicos da frota.
-          </p>
-        </div>
-        <div className="hidden md:block md:col-span-5 relative h-28 sm:h-36 overflow-hidden bg-surface-container rounded-sm border-b-2 border-primary">
-          <div className="absolute inset-0 opacity-15 pointer-events-none">
-            <img 
-              src={IMAGE_LINKS.engineBg} 
-              alt="Engine Block Blueprint" 
-              className="w-full h-full object-cover"
-              referrerPolicy="no-referrer"
-            />
+      {/* Vehicle Filter (Vertical) */}
+      <section id="vehicle-filter" className="bg-white p-4 sm:p-6 rounded-md border border-outline-variant/15 shadow-sm space-y-4">
+        <h3 className="text-xs font-bold uppercase tracking-widest text-primary flex items-center gap-2 border-b border-outline-variant/10 pb-3">
+          <Wrench className="w-4 h-4 text-tertiary-fixed" /> Seleção de Frota
+        </h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="flex flex-col gap-1.5">
+            <label className="text-[10px] font-bold text-outline uppercase tracking-wider">Marca</label>
+            <select 
+              value={currentVehicle.brand}
+              onChange={(e) => {
+                const matched = vehicles.find(v => v.brand === e.target.value);
+                if (matched) onSelectVehicle(matched);
+              }}
+              className="bg-surface-container-low text-primary text-xs sm:text-sm font-bold p-3 rounded border border-outline-variant/20 focus:ring-1 focus:ring-primary focus:outline-none"
+            >
+              <option value="Volkswagen">VW (Volkswagen)</option>
+            </select>
           </div>
-          <div className="absolute bottom-4 right-4 text-right">
-            <span className="block text-[9px] font-bold uppercase text-outline tracking-tighter">Módulo de Engenharia</span>
-            <span className="text-xl font-headline font-black text-primary">VWB-SYS-903</span>
+          <div className="flex flex-col gap-1.5">
+            <label className="text-[10px] font-bold text-outline uppercase tracking-wider">Modelo</label>
+            <select 
+              value={currentVehicle.id}
+              onChange={(e) => {
+                const matched = vehicles.find(v => v.id === e.target.value);
+                if (matched) onSelectVehicle(matched);
+              }}
+              className="bg-surface-container-low text-primary text-xs sm:text-sm font-bold p-3 rounded border border-outline-variant/20 focus:ring-1 focus:ring-primary focus:outline-none"
+            >
+              {vehicles.map(v => (
+                <option key={v.id} value={v.id}>{v.model} ({v.modification})</option>
+              ))}
+            </select>
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <label className="text-[10px] font-bold text-outline uppercase tracking-wider">Ano</label>
+            <select disabled className="bg-surface-container-low text-primary text-xs sm:text-sm font-bold p-3 rounded border border-outline-variant/20 opacity-80 cursor-not-allowed">
+              <option>{currentVehicle.year}</option>
+            </select>
           </div>
         </div>
       </section>
 
-      {/* Category Grid (Bento Style) */}
-      <section id="bento-categories" className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-4">
+      {/* Category Grid (Bento Style in 2 cols) */}
+      <section id="bento-categories" className="grid grid-cols-2 gap-3 sm:gap-4">
         {techGroups.map((group) => {
           const isActive = group.name === selectedGroup;
           return (
             <div
               id={`group-card-${group.id}`}
               key={group.id}
-              onClick={() => setSelectedGroup(group.name)}
+              onClick={() => {
+                setSelectedGroup(group.name);
+                setSelectedSubgroup(null); // Reset subgroup when changing group
+              }}
               className={`group relative p-3.5 sm:p-5 rounded-md transition-all cursor-pointer border hover:-translate-y-0.5 active:scale-95 duration-200 ${
                 isActive 
                   ? "bg-primary text-on-primary border-primary shadow-md" 
@@ -175,9 +157,41 @@ export default function Catalog({
         })}
       </section>
 
-      {/* Parts Table Section */}
-      <section id="parts-inventory" className="space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      {/* Subgroups Selection */}
+      {selectedGroup && (
+        <section id="subgroups-selection" className="space-y-3">
+          <h4 className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant flex items-center gap-1.5">
+            <Layers className="w-3.5 h-3.5" /> Subgrupos de {selectedGroup}
+          </h4>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5">
+            {techSubgroups.filter(sg => {
+               const g = techGroups.find(tg => tg.name === selectedGroup);
+               return g && sg.groupId === g.id;
+            }).map(sg => {
+              const isActive = sg.name === selectedSubgroup;
+              return (
+                <button
+                  key={sg.id}
+                  onClick={() => setSelectedSubgroup(sg.name)}
+                  className={`p-3 text-left rounded-md transition-all border text-xs font-bold shadow-sm flex items-center justify-between group ${
+                    isActive 
+                      ? "bg-primary text-on-primary border-primary" 
+                      : "bg-white text-primary border-outline-variant/20 hover:border-primary/50"
+                  }`}
+                >
+                  <span className="truncate pr-2">{sg.name}</span>
+                  <ChevronRight className={`w-3 h-3 flex-shrink-0 transition-transform ${isActive ? 'translate-x-0 opacity-100' : '-translate-x-2 opacity-0 group-hover:opacity-100'}`} />
+                </button>
+              );
+            })}
+          </div>
+        </section>
+      )}
+
+      {/* Parts Table Section - Only visible if a subgroup is selected */}
+      {selectedSubgroup && (
+        <section id="parts-inventory" className="space-y-4 pt-2">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <h4 className="font-headline font-bold text-lg text-primary border-l-4 border-tertiary-fixed pl-3 flex items-center gap-2">
             Inventário de Peças Originais ({filteredParts.length})
           </h4>
@@ -308,6 +322,7 @@ export default function Catalog({
           </div>
         </div>
       </section>
+      )}
 
       {/* Diagnostic Panel & Recent Vehicles Stack */}
       <section id="diagnostics-summary" className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">

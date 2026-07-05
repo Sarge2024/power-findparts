@@ -6,6 +6,7 @@ export interface Part {
   manufacturer: string;
   inventoryCode: string;
   group: string; // e.g. "Elétrica", "Suspensão", "Motor", "Rodas e Freios"
+  subgroup?: string; // e.g. "Alternador", "Bateria", "Correias"
 }
 
 export interface Vehicle {
@@ -41,6 +42,12 @@ export interface TechGroup {
   groupCode: string;
   icon: string;
   subgroupCount: number;
+}
+
+export interface TechSubgroup {
+  id: string;
+  groupId: string;
+  name: string;
 }
 
 export interface CosmosPart {
