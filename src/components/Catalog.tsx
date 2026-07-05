@@ -253,43 +253,44 @@ export default function Catalog({
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="bg-surface-container-low border-b border-outline-variant/10">
-                  <th className="px-5 py-3.5 text-[9px] font-extrabold uppercase tracking-widest text-outline">Ref</th>
-                  <th className="px-5 py-3.5 text-[9px] font-extrabold uppercase tracking-widest text-outline">Marca / Tipo</th>
-                  <th className="px-5 py-3.5 text-[9px] font-extrabold uppercase tracking-widest text-outline">Número da Peça</th>
-                  <th className="px-5 py-3.5 text-[9px] font-extrabold uppercase tracking-widest text-outline">Descrição</th>
-                  <th className="px-5 py-3.5 text-[9px] font-extrabold uppercase tracking-widest text-outline text-right">Est. Preço</th>
-                  <th className="px-5 py-3.5 text-[9px] font-extrabold uppercase tracking-widest text-outline text-center">Ações</th>
+                  <th className="px-2 py-2 md:px-5 md:py-3.5 text-[9px] font-extrabold uppercase tracking-widest text-outline">Ref</th>
+                  <th className="px-2 py-2 md:px-5 md:py-3.5 text-[9px] font-extrabold uppercase tracking-widest text-outline">Marca / Tipo</th>
+                  <th className="px-2 py-2 md:px-5 md:py-3.5 text-[9px] font-extrabold uppercase tracking-widest text-outline">Número da Peça</th>
+                  <th className="px-2 py-2 md:px-5 md:py-3.5 text-[9px] font-extrabold uppercase tracking-widest text-outline">Descrição</th>
+                  <th className="px-2 py-2 md:px-5 md:py-3.5 text-[9px] font-extrabold uppercase tracking-widest text-outline text-right">Est. Preço</th>
+                  <th className="px-2 py-2 md:px-5 md:py-3.5 text-[9px] font-extrabold uppercase tracking-widest text-outline text-center">Ações</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-outline-variant/10">
                 {filteredParts.length > 0 ? (
                   filteredParts.map((part, index) => (
                     <tr key={part.number} className="hover:bg-surface-container-low/50 transition-colors group">
-                      <td className="px-5 py-4 font-headline font-bold text-primary text-xs">
+                      <td className="px-2 py-3 md:px-5 md:py-4 font-headline font-bold text-primary text-[10px] md:text-xs">
                         {String(index + 1).padStart(3, '0')}
                       </td>
-                      <td className="px-5 py-4">
-                        <span className="text-[9px] bg-secondary-container text-on-secondary-fixed-variant px-2.5 py-1 rounded-full font-bold tracking-tight">
+                      <td className="px-2 py-3 md:px-5 md:py-4">
+                        <span className="text-[8px] md:text-[9px] bg-secondary-container text-on-secondary-fixed-variant px-1.5 md:px-2.5 py-0.5 md:py-1 rounded-full font-bold tracking-tight block md:inline w-max">
                           {part.extraInfo}
                         </span>
                       </td>
-                      <td className="px-5 py-4 font-mono text-xs font-bold text-surface-tint tracking-tight">
+                      <td className="px-2 py-3 md:px-5 md:py-4 font-mono text-[9px] md:text-xs font-bold text-surface-tint tracking-tight">
                         {part.number}
                       </td>
-                      <td className="px-5 py-4">
-                        <p className="text-xs font-bold text-primary">{part.name}</p>
-                        <p className="text-[10px] text-outline">{part.manufacturer}</p>
+                      <td className="px-2 py-3 md:px-5 md:py-4 min-w-[120px]">
+                        <p className="text-[10px] md:text-xs font-bold text-primary line-clamp-2 md:line-clamp-none">{part.name}</p>
+                        <p className="text-[8px] md:text-[10px] text-outline truncate">{part.manufacturer}</p>
                       </td>
-                      <td className="px-5 py-4 text-right font-headline font-extrabold text-xs text-primary">
+                      <td className="px-2 py-3 md:px-5 md:py-4 text-right font-headline font-extrabold text-[10px] md:text-xs text-primary">
                         {part.priceEst}
                       </td>
-                      <td className="px-5 py-4 text-center">
+                      <td className="px-2 py-3 md:px-5 md:py-4 text-center">
                         <button
                           onClick={() => onSelectPartForLinking(part)}
-                          className="inline-flex items-center gap-1.5 bg-primary text-on-primary hover:bg-primary-container px-3.5 py-1.5 rounded-sm text-[10px] font-bold uppercase tracking-tight transition-all active:scale-95 duration-100 shadow-sm"
+                          className="inline-flex items-center gap-1 bg-primary text-on-primary hover:bg-primary-container px-2 py-1.5 md:px-3.5 md:py-1.5 rounded-sm text-[9px] md:text-[10px] font-bold uppercase tracking-tight transition-all active:scale-95 duration-100 shadow-sm"
                         >
                           <span className="material-symbols-outlined text-[14px]">barcode_scanner</span>
-                          Vincular Físico
+                          <span className="hidden md:inline">Vincular Físico</span>
+                          <span className="md:hidden">Vincular</span>
                         </button>
                       </td>
                     </tr>
