@@ -282,9 +282,12 @@ export default function App() {
           >
             <Menu className="w-5 h-5" />
           </button>
-          <h1 className="font-headline text-xs font-black tracking-wider uppercase text-left">
-            {currentTabTitle}
-          </h1>
+          <div className="flex items-center gap-2">
+            <img src="/logo.png" alt="Power Find Parts Logo" className="w-6 h-6 object-contain" />
+            <h1 className="font-headline text-xs font-black tracking-wider uppercase text-left">
+              {currentTabTitle}
+            </h1>
+          </div>
         </div>
         <div className="flex items-center gap-1">
           <button 

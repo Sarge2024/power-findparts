@@ -21,13 +21,13 @@ export default defineConfig(() => {
           display: "standalone",
           icons: [
             {
-              src: "https://lh3.googleusercontent.com/aida-public/AB6AXuDJh1pQBzRjhwiCiRv8rr5sjNgN-fDh0GeuwgA65Oqoh67U7iC56cTP_KgGcdPrJlzAITDAQV0oIbXmNjtHmb8lMNCsf6Rn-ATMyjiJ_9Af1SqDBBloTs2_loN1gVHOCcxlu5_yUNdZZAw9EyTSfPnWBiP6LnOB3F-NVYf8QAAFjNGSaS79QS0uQLyS7I4Sfa0G6UjNFiEgEFmQL7LftO3LmFa_fL6M3pqo3C93wDgtv-Psb7LAns3qRg",
+              src: "/logo.png",
               sizes: "192x192",
               type: "image/png",
               purpose: "any maskable"
             },
             {
-              src: "https://lh3.googleusercontent.com/aida-public/AB6AXuDJh1pQBzRjhwiCiRv8rr5sjNgN-fDh0GeuwgA65Oqoh67U7iC56cTP_KgGcdPrJlzAITDAQV0oIbXmNjtHmb8lMNCsf6Rn-ATMyjiJ_9Af1SqDBBloTs2_loN1gVHOCcxlu5_yUNdZZAw9EyTSfPnWBiP6LnOB3F-NVYf8QAAFjNGSaS79QS0uQLyS7I4Sfa0G6UjNFiEgEFmQL7LftO3LmFa_fL6M3pqo3C93wDgtv-Psb7LAns3qRg",
+              src: "/logo.png",
               sizes: "512x512",
               type: "image/png",
               purpose: "any maskable"
